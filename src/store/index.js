@@ -42,11 +42,14 @@ const authSlice = createSlice({
 const store = configureStore({
     reducer: {counter: counterSlice.reducer, auth: authSlice.reducer } // ! ONLY ONE ROOT REDUCER (the key) EVER GOES HERE
 })
-console.log(store.getState())
+
+
+
 store.subscribe(() => {
     console.log(store.getState())
 })
 
+// ! Remeber to export your actions like this
 export const counterActions = counterSlice.actions
 export const authActions = authSlice.actions
 export default store
