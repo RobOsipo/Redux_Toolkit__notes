@@ -2,14 +2,14 @@
 import { configureStore, createSlice } from '@reduxjs/toolkit'
 
 
-const initState = {counter: 0, showCounter: true}
+const initCounterState = {counter: 0, showCounter: true}
 
 const counterSlice = createSlice({
     name: 'counter',
-    initialState: initState,
+    initialState: initCounterState,
     reducers: {
         increment(state) {
-            state.counter = state.counter + 1 // Dont need to worry about losing the other state prperties eg. showCounter
+            state.counter = state.counter + 1 // Dont need to worry about losing the other state properties eg. state.showCounter
         }, 
         decrement(state) {
             state.counter = state.counter - 1
@@ -18,21 +18,37 @@ const counterSlice = createSlice({
             state.counter = state.counter + action.payload
         },
         toggleCounter(state) {
-           state.showCounter = !state.showCounter
+            state.showCounter = !state.showCounter
         }
     }
 })
 
+const initAuthState = { isAuthenticated: false }
 
-const store = configureStore({
-    reducer: counterSlice.reducer
+const authSlice = createSlice({
+    name: 'auth',
+    initialState: initAuthState,
+    reducers: {
+        login(state) {
+            state.isAuthenticated = true
+        },
+        logout(state) {
+            state.isAuthenticated = false
+        }
+    }
 })
 
+// If I has just one slice I could just do something like reducer: counterSlice.reducer
+const store = configureStore({
+    reducer: {counter: counterSlice.reducer, auth: authSlice.reducer } // ! ONLY ONE ROOT REDUCER (the key) EVER GOES HERE
+})
+console.log(store.getState())
 store.subscribe(() => {
     console.log(store.getState())
 })
 
 export const counterActions = counterSlice.actions
+export const authActions = authSlice.actions
 export default store
 
 

@@ -5,8 +5,8 @@ import { counterActions } from '../store/index'
 const Counter = () => {
 
   // remember I must use hooks instead of the connect function
-  const counter = useSelector(state => state.counter)
-  const show = useSelector(state => state.showCounter)
+  const counter = useSelector(state => state.counter.counter)
+  const show = useSelector(state => state.counter.showCounter)
   const dispatch = useDispatch()
 
   const incrementHandler = () => {
